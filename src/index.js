@@ -109,12 +109,17 @@ class ReactPhoneInput extends React.Component {
   constructor(props) {
     super(props);
     let filteredCountries = countryData.allCountries;
+    const { localization = null } = props;
 
     if (props.disableAreaCodes) filteredCountries = this.deleteAreaCodes(filteredCountries);
     if (props.regions) filteredCountries = this.filterRegions(props.regions, filteredCountries);
 
-    const onlyCountries = this.excludeCountries(
+    let onlyCountries = this.excludeCountries(
       this.getOnlyCountries(props.onlyCountries, filteredCountries), props.excludeCountries);
+
+    if (localization && Object.keys(localization).length > 0) {
+      onlyCountries = onlyCountries.sort((a, b) => localization[a.name].localeCompare(localization[b.name]));
+    }
 
     const preferredCountries = filter(filteredCountries, (country) => {
       return some(props.preferredCountries, (preferredCountry) => {
@@ -460,7 +465,7 @@ class ReactPhoneInput extends React.Component {
     }
 
     //Does not exceed 15 digit phone number limit
-    if (e.target.value.replace(/\D/g, '').length > 15) {
+    if (e.target.value.replace(/\D/g, '').length > 16) {
       return;
     }
 

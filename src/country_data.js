@@ -1350,7 +1350,7 @@ const rawAllCountries = [
     ['europe'],
     "tr",
     "90",
-    "+.. ... ... .. .."
+    "+.. ... ... .. ..-...."
   ],
   [
     "Turkmenistan",
