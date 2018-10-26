@@ -7,11 +7,10 @@ import { trim, startsWith } from 'lodash/string';
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { document } from './global.js';
 
 import countryData from './country_data.js';
 
-import './styles.less';
+// import './styles.less';
 
 class ReactPhoneInput extends React.Component {
   static propTypes = {
@@ -96,7 +95,7 @@ class ReactPhoneInput extends React.Component {
 
     onEnterKeyPress: () => {},
 
-    isModernBrowser: document.createElement ? (
+    isModernBrowser: typeof document !== 'undefined' && document.createElement ? (
       Boolean(document.createElement('input').setSelectionRange)
     ) : false,
 
@@ -171,14 +170,14 @@ class ReactPhoneInput extends React.Component {
   }
 
   componentDidMount() {
-    if (document.addEventListener) {
+    if (typeof document !== 'undefined' && document.addEventListener) {
       document.addEventListener('mousedown', this.handleClickOutside);
       document.addEventListener('keydown', this.handleKeydown);
     }
   }
 
   componentWillUnmount() {
-    if (document.removeEventListener) {
+    if (typeof document !== 'undefined' && document.removeEventListener) {
       document.removeEventListener('mousedown', this.handleClickOutside);
       document.removeEventListener('keydown', this.handleKeydown);
     }
